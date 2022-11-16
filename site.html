@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MAP</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+
+      #divcarte {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="divcarte">
+
+      <!-- La où la carte est gen -->
+
+    </div>
+    <script src="data.geojson" type="text/javascript"></script>
+    <script type="text/javascript">
+      //On crée l'emplacement de la carte
+      var carte = L.map("divcarte").setView([47.179044, 3.030953], 6.0);
+      
+      //On importe le fond de carte
+      var tuiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "Fond de carte par les contributeurs  < a href = »https: //www.openstreetmap.org/ »>OpenStreetMap</a>, < a href = »https: //creativecommons.org/licenses/by-sa/2.0/ »>CC-BY-SA</a>"
+      }).addTo(carte);
+      
+      //Affichage des points
+      var equipements_lyr = L.geoJSON(liste, {
+        pointToLayer: function(feature, latlng) {
+          return L.marker(latlng);
+        },
+        onEachFeature : onEachEquip
+      }).addTo(carte);
+
+      function onEachEquip(feature, layer) {
+        var popupContenu =  "<p>Nom de l’organisme :" + feature.properties.nom_de_lorganisme + "<br>Localisation :" + feature.properties.localisation + "</p>";
+        layer.bindPopup(popupContenu);
+      }
+
+    </script>
+  </body>
+</html>

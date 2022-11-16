@@ -43,6 +43,7 @@
         onEachFeature : onEachEquip
       }).addTo(carte);
 
+      //Affichage de la pop up
       function onEachEquip(feature, layer) {
         var popupContenu =  "<p>Nom de l’organisme :" + feature.properties.nom_de_lorganisme + "<br>Localisation :" + feature.properties.localisation + "</p>";
         layer.bindPopup(popupContenu);

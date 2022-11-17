@@ -6,45 +6,21 @@
     <title>MAP</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
-          <link rel="stylesheet" href="Main.css">
+    <link rel="stylesheet" href="Main.css">
+    <link rel="stylesheet" href="leaflet-search.css"/>
   </head>
   <body>
    <header>
       <h2>DESIGN4GREEN</h2>
    </header>
-            <button type="button" class="open-button" onclick="openForm()">PANIER</button>
-
 <p><h3>Bienvenue</h3> sur se site vous pouvez choisir votre formation</p>
     <div id="divcarte">
+
       <!-- La où la carte est gen -->
+
     </div>
     <div id="liste">
-      <div class="famille-carte" >
-               </div>
-                  <h2>recommandation</h2>
-                  <p>thematique</p>
-                  <p>critere</p>
-                  <input type="checkbox" id="checkbox">
-      <div class="famille-carte" id="${famille}">
-               </div>
-                  <h2>${recommandation</h2>
-                  <p class="small">thematique</p>
-                  <p class="small ">critere</p>
-                  <input type="checkbox" id="checkbox">
-      <div class="famille-carte" id="${famille}">
-               </div>
-                  <h2>${recommandation}</h2>
-                  <p class="small">${thematique}</p>
-                  <p class="small ">${critere}</p>
-                  <input type="checkbox" id="checkbox">
-      <div class="famille-carte" id="${famille}">
-               </div>
-                  <h2>${recommandation}</h2>
-                  <p class="small">${thematique}</p>
-                  <p class="small ">${critere}</p>
-                  <p><input type="checkbox" id="checkbox"></p>
-    </div>
-     <!--  <ul>
+      <ul>
          <li>feature
             <ul>
                <li>bla bla bla bla1</li>
@@ -81,19 +57,17 @@
                 <li>bla bla bla bl3a</li>
             </ul>
          </li>
-      </ul> -->
-      <form action="https://formspree.io/f/xgeqdrgr" method="POST">
-         <input type="email" name="_replyto" placeholder="Email">
-         <button type="submit">Devis</button>
-      </form>
+      </ul>
+</div>
     <script src="data.geojson" type="text/javascript"></script>
+    <script src="leaflet-search.js"></script>
     <script type="text/javascript">
       //On crée l'emplacement de la carte
       var carte = L.map("divcarte").setView([47.179044, 3.030953], 6.0);
       
       //On importe le fond de carte
       var tuiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "Fond de carte par les contributeurs  < a href = »https: //www.openstreetmap.org/ »>OpenStreetMap</a>, < a href = »https: //creativecommons.org/licenses/by-sa/2.0/ »>CC-BY-SA</a>"
+        attribution: 'Fond de carte par les contributeurs <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
       }).addTo(carte);
       
       //Affichage des points
@@ -106,17 +80,23 @@
 
       //Affichage de la pop up
       function onEachEquip(feature, layer) {
-        var popupContenu =  "<p>Nom de l’organisme :" + feature.properties.nom_de_lorganisme + "<br>Localisation :" + feature.properties.localisation + "</p>";
+        var popupContenu =  "<p>Nom de l’organisme: " + feature.properties.nom_de_lorganisme + "<br>Localisation: " + feature.properties.localisation + "<br>Intitulé: " + feature.properties.intitule + "</p>";
         layer.bindPopup(popupContenu);
       }
 
-      function closeForm() {
-      document.getElementById("popupForm").style.display = "none";
-      }
+      L.control.search({
+        layer: equipements_lyr,
+        initial: false,
+        propertyName: 'nom_de_lorganisme',
+        buildTip: function(text, val) {
+          var type = val.layer.feature.properties.localisation;
+          return '<a href="#" class="'+type+'">'+text+' <b>'+type+'</b></a>';
+        }
+      }).addTo(carte);
 
     </script>
     <footer>
-       <h3>Site créé dans le cadre du chalenge design4green</h3>
+       <h3>Site créé dans le cadre du challenge design4green</h3>
     </footer>
   </body>
 </html>

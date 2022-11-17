@@ -57,9 +57,11 @@
       //Affichage de la pop up
       function onEachEquip(feature, layer) {
         const list = document.querySelector("#liste");
+        //Définition de la pop up
         var popupContenu =  "<p>Nom de l’organisme: " + feature.properties.nom_de_lorganisme + "<br>Localisation: " + feature.properties.localisation + "<br>Intitulé: " + feature.properties.intitule + "</p>";
+        //Définition de la liste
         var listContenu = `<div class="famille-carte" id="divlist`+feature.id+`">
-                                <h2>Localisation: `+feature.properties.localisation+`</h2>
+                                <h2><a href='#' onclick='clickOnMarker(`+feature.id+`)'>Localisation: `+feature.properties.localisation+`</a></h2>
                                 <p>Thématique: `+feature.properties.intitule+`</p>
                                 <p>École: `+feature.properties.nom_de_lorganisme+`</p>
                                 <input type="checkbox" id="checkbox`+feature.id+`">
@@ -78,6 +80,12 @@
           return '<a href="#" class="'+type+'">'+text+' <b>'+type+'</b></a>';
         }
       }).addTo(carte);
+
+      //Permet de cliquer sur les markers depuis la liste
+      function clickOnMarker(marker_id) {
+        var xPathRes = document.evaluate ('//*[@id="divcarte"]/div[1]/div[4]/img['+marker_id+']', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+        xPathRes.singleNodeValue.click();
+      }
 
     </script>
   </body>

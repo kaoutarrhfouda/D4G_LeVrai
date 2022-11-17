@@ -19,10 +19,7 @@
       </div>
       <div id="liste">
       </div>
-      <form action="https://formspree.io/f/xgeqdrgr" method="POST">
-         <input type="email" name="_replyto" placeholder="Email">
-         <button type="submit">Devis</button>
-      </form>
+         <button type="submit" onclick="window.location.href = sendemail();"  >Demander un devis</button>
       <div class="open-btn">
          <button class="open-button" onclick="openForm()">PANIER</button>
       </div>
@@ -94,8 +91,21 @@
                  }
                  }
              }
-         
-           //Affichage de la pop up
+         function sendemail(){
+            var emails='mailto:';
+            for(var i = 1; i < liste.features.length+1; i++) {
+              var checked = document.getElementById("checkbox"+i).checked;
+              if(checked){
+               emails+=liste.features[i].properties.nom_de_lorganisme.replace(/\s/g, '')+"@gmail.com,"
+
+            }}
+            emails+="?subject=Demande de devis&body=Bonjour, j'aimerai demander un devis."
+            return emails;
+
+         }
+
+
+           //Affichage de la pmailto:op up
            function onEachEquip(feature, layer) {
              const list = document.querySelector("#liste");
              //Définition de la pop up

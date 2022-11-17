@@ -13,9 +13,7 @@
       <header>
          <h2>DESIGN4GREEN</h2>
       </header>
-      <p>
       <h3>Bienvenue</h3>
-      sur se site vous pouvez choisir votre formation</p>
       <div id="divcarte">
          <!-- La où la carte est gen -->
       </div>
@@ -25,7 +23,6 @@
          <input type="email" name="_replyto" placeholder="Email">
          <button type="submit">Devis</button>
       </form>
-      <p>Cliquez sur le bouton "Ouvrir la forme" pour ouvrir la forme Popup.</p>
       <div class="open-btn">
          <button class="open-button" onclick="openForm()">PANIER</button>
       </div>
@@ -59,14 +56,11 @@
                      </tbody>
                   </table>
                </div>
-               <button type="button" class="btn generate" onclick="printDiv()">Générer le rapport</button>
-               <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
+ <button type="button" onclick="printDiv()" class="btn generate" onclick="printDiv()">Générer le rapport</button> 
+                <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
             </div>
          </div>
       </div>
-      <button type="submit" class="btn">Connecter</button>
-      <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
-      </form>
       </div>
       </div>
       <script src="data.geojson" type="text/javascript"></script>
@@ -108,7 +102,7 @@
              var popupContenu =  "<p>Nom de l’organisme: " + feature.properties.nom_de_lorganisme + "<br>Localisation: " + feature.properties.localisation + "<br>Intitulé: " + feature.properties.intitule + "</p>";
              //Définition de la liste
              var listContenu = `<div class="famille-carte" id="divlist`+feature.id+`">
-                                     <h2><a href='#' onclick='clickOnMarker(`+feature.id+`)'>Localisation: `+feature.properties.localisation+`</a></h2>
+                                     <h3><a href='#' onclick='clickOnMarker(`+feature.id+`)'>Localisation: `+feature.properties.localisation+`</a></h3>
                                      <p>Thématique: `+feature.properties.intitule+`</p
                                      <p>École: `+feature.properties.nom_de_lorganisme+`</p>
                                      <input type="checkbox" id="checkbox`+feature.id+`">
@@ -136,7 +130,19 @@
              onEachFeature : onEachEquip,
            }).addTo(carte);
          
-         
+          //Print le pdf
+    function printDiv() {
+        var divContents = document.getElementById("table-2").innerHTML;
+        var a = window.open();
+        a.document.write('<html>');
+
+        a.document.write('<body>');
+        a.document.write('<style type="text/css">table{border-collapse: collapse;}th, td{border: 1px solid black;padding: 10px;</style>');
+        a.document.write(divContents);
+        a.document.write('</body></html>');
+        a.document.close();
+        a.print();
+    }
          
            //Recherche des éléments
            L.control.search({

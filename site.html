@@ -35,10 +35,25 @@
     </div>
     <div class="login-popup">
       <div class="form-popup" id="popupForm">
-            <div class="list">
-               
-            </div>
-          <button type="submit" class="btn">Connecter</button>
+         <table>
+               <thead>
+                  <tr>
+                     <th align="left">Recommandation</th>                  
+                     <th align="left">Famille</th>
+                  </tr>
+               </thead>
+            <tbody id="recapitulatif">
+                  <!-- C'est ici que le code généré sera écrit -->>
+            </tbody>
+         </table>
+<form id="myForm">
+  <input type="text" name="name" value="" placeholder="Search by Name" />
+  <input type="submit" name="submit" value="Submit form" />
+</form>
+
+
+<div class="popup" data-popup="popup-1">
+</div>          <button type="submit" class="btn">Connecter</button>
           <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
         </form>
       </div>
@@ -47,19 +62,49 @@
     <script src="leaflet-search.js"></script>
     <script type="text/javascript">
     function openForm() {
-       const lis = document.getElementById("popupForm").style.display = "block";
-        var popupContenue=  "<p>Nom de l’organisme: " + feature.properties.nom_de_lorganisme + "<br>Localisation: " + feature.properties.localisation + "<br>Intitulé: " + feature.properties.intitule + "</p>";
-        var listContenu = `<div class="list" id="`+feature.properties._jawgmaps_options.id+`">
-                                <h2>Localisation: `+feature.properties.localisation+`</h2>
-                                <p>Thématique: `+feature.properties.intitule+`</p>
+
+        //       const checked_elements = [];
+        // for(var j = 0; j < 3; j++) {
+        //     var checked_unit = document.getElementById("checkbox"+j).checked;
+        //     checked_elements[j] = checked_unit;
+        // }
+
+        document.getElementById("popupForm").style.display = "block";
+         for(var i = 0; i < 3; i++) {
+            // var checked = document.getElementById("checkbox"+i).checked;
+            // if(checked){
+
+                const recap = `<tr> 
+                        <td align="left">` + feature.properties.localisation +`</td>
+                        <td align="left"></td>
+                    </tr>`;
+                const result = document.querySelector("#recapitulatif");
+                result.insertAdjacentHTML(recap);
+            }
+        }
+   
+
+   L.geoJson(liste, {
+pointToLayer: function picnicFilter(feature) {
+  
+    console.log(feature.properties.localisation);
+}});
+      //Affichage de la pop up
+      function onEachEquip(feature, layer) {
+        const list = document.querySelector("#liste");
+        //Définition de la pop up
+        var popupContenu =  "<p>Nom de l’organisme: " + feature.properties.nom_de_lorganisme + "<br>Localisation: " + feature.properties.localisation + "<br>Intitulé: " + feature.properties.intitule + "</p>";
+        //Définition de la liste
+        var listContenu = `<div class="famille-carte" id="divlist`+feature.id+`">
+                                <h2><a href='#' onclick='clickOnMarker(`+feature.id+`)'>Localisation: `+feature.properties.localisation+`</a></h2>
+                                <p>Thématique: `+feature.properties.intitule+`</p
                                 <p>École: `+feature.properties.nom_de_lorganisme+`</p>
-                                <input type="checkbox" id="`+feature.properties._jawgmaps_options.id+`">
+                                <input type="checkbox" id="checkbox`+feature.id+`">
                             </div>`
-        lis.insertAdjacentHTML("beforeend", listContenu);
-        layer.bindPopup(popupContenue);
+
+        list.insertAdjacentHTML("beforeend", listContenu);
+        layer.bindPopup(popupContenu);
       }
-
-
       function closeForm() {
         document.getElementById("popupForm").style.display = "none";
       }
@@ -79,21 +124,7 @@
         onEachFeature : onEachEquip,
       }).addTo(carte);
 
-      //Affichage de la pop up
-      function onEachEquip(feature, layer) {
-        const list = document.querySelector("#liste");
-        //Définition de la pop up
-        var popupContenu =  "<p>Nom de l’organisme: " + feature.properties.nom_de_lorganisme + "<br>Localisation: " + feature.properties.localisation + "<br>Intitulé: " + feature.properties.intitule + "</p>";
-        //Définition de la liste
-        var listContenu = `<div class="famille-carte" id="divlist`+feature.id+`">
-                                <h2><a href='#' onclick='clickOnMarker(`+feature.id+`)'>Localisation: `+feature.properties.localisation+`</a></h2>
-                                <p>Thématique: `+feature.properties.intitule+`</p>
-                                <p>École: `+feature.properties.nom_de_lorganisme+`</p>
-                                <input type="checkbox" id="checkbox`+feature.id+`">
-                            </div>`
-        list.insertAdjacentHTML("beforeend", listContenu);
-        layer.bindPopup(popupContenu);
-      }
+
 
       //Recherche des éléments
       L.control.search({
@@ -118,3 +149,4 @@
     </footer>
   </body>
 </html>
+

@@ -8,7 +8,6 @@
     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
     <link rel="stylesheet" href="Main.css">
     <link rel="stylesheet" href="leaflet-search.css"/>
-    <link rel="stylesheet" href="leaflet-panel-layers.css">
   </head>
   <body>
    <header>
@@ -22,22 +21,48 @@
     </div>
     <div id="liste">
 
-        <!-- La ou la liste est gen -->
-
     </div>
       <form action="https://formspree.io/f/xgeqdrgr" method="POST">
          <input type="email" name="_replyto" placeholder="Email">
          <button type="submit">Devis</button>
       </form>
-<button type="button" class="open-button" onclick="openForm()">PANIER</button>
-    <footer>
-       <h3>Site créé dans le cadre du challenge design4green</h3>
-    </footer>
+    
+
+
+    <p>Cliquez sur le bouton "Ouvrir la forme" pour ouvrir la forme Popup.</p>
+    <div class="open-btn">
+      <button class="open-button" onclick="openForm()">PANIER</button>
+    </div>
+    <div class="login-popup">
+      <div class="form-popup" id="popupForm">
+            <div class="list">
+               
+            </div>
+          <button type="submit" class="btn">Connecter</button>
+          <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
+        </form>
+      </div>
+    </div>
     <script src="data.geojson" type="text/javascript"></script>
     <script src="leaflet-search.js"></script>
-    <script src="leaflet-panel-layers.js"></script>
     <script type="text/javascript">
+    function openForm() {
+       const lis = document.getElementById("popupForm").style.display = "block";
+        var popupContenue=  "<p>Nom de l’organisme: " + feature.properties.nom_de_lorganisme + "<br>Localisation: " + feature.properties.localisation + "<br>Intitulé: " + feature.properties.intitule + "</p>";
+        var listContenu = `<div class="list" id="`+feature.properties._jawgmaps_options.id+`">
+                                <h2>Localisation: `+feature.properties.localisation+`</h2>
+                                <p>Thématique: `+feature.properties.intitule+`</p>
+                                <p>École: `+feature.properties.nom_de_lorganisme+`</p>
+                                <input type="checkbox" id="`+feature.properties._jawgmaps_options.id+`">
+                            </div>`
+        lis.insertAdjacentHTML("beforeend", listContenu);
+        layer.bindPopup(popupContenue);
+      }
 
+
+      function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+      }
       //On crée l'emplacement de la carte
       var carte = L.map("divcarte").setView([47.179044, 3.030953], 6.0);
       
@@ -88,7 +113,9 @@
       }
 
     </script>
+    <footer>
+       <h3>Site créé dans le cadre du challenge design4green</h3>
+    </footer>
   </body>
 </html>
-
 

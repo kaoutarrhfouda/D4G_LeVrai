@@ -20,30 +20,7 @@
 
     </div>
     <div id="liste">
-      <div class="famille-carte" >
-               </div>
-                  <h2>recommandation</h2>
-                  <p>thematique</p>
-                  <p>critere</p>
-                  <input type="checkbox" id="checkbox">
-      <div class="famille-carte" id="${famille}">
-               </div>
-                  <h2>${recommandation</h2>
-                  <p class="small">thematique</p>
-                  <p class="small ">critere</p>
-                  <input type="checkbox" id="checkbox">
-      <div class="famille-carte" id="${famille}">
-               </div>
-                  <h2>${recommandation}</h2>
-                  <p class="small">${thematique}</p>
-                  <p class="small ">${critere}</p>
-                  <input type="checkbox" id="checkbox">
-      <div class="famille-carte" id="${famille}">
-               </div>
-                  <h2>${recommandation}</h2>
-                  <p class="small">${thematique}</p>
-                  <p class="small ">${critere}</p>
-                  <p><input type="checkbox" id="checkbox"></p>
+
     </div>
       <form action="https://formspree.io/f/xgeqdrgr" method="POST">
          <input type="email" name="_replyto" placeholder="Email">
@@ -67,12 +44,20 @@
         pointToLayer: function(feature, latlng) {
           return L.marker(latlng);
         },
-        onEachFeature : onEachEquip
+        onEachFeature : onEachEquip,
       }).addTo(carte);
 
       //Affichage de la pop up
       function onEachEquip(feature, layer) {
+        const list = document.querySelector("#liste");
         var popupContenu =  "<p>Nom de l’organisme: " + feature.properties.nom_de_lorganisme + "<br>Localisation: " + feature.properties.localisation + "<br>Intitulé: " + feature.properties.intitule + "</p>";
+        var listContenu = `<div class="famille-carte" id="`+feature.properties._jawgmaps_options.id+`">
+                                <h2>Localisation: `+feature.properties.localisation+`</h2>
+                                <p>Thématique: `+feature.properties.intitule+`</p>
+                                <p>École: `+feature.properties.nom_de_lorganisme+`</p>
+                                <input type="checkbox" id="`+feature.properties._jawgmaps_options.id+`">
+                            </div>`
+        list.insertAdjacentHTML("beforeend", listContenu);
         layer.bindPopup(popupContenu);
       }
 

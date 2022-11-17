@@ -23,26 +23,10 @@ html,body {
   background-color: powderblue;
 }
 
-ul{
-
-    list-style-type: none; 
-    background-color: whitesmoke;
-  margin:0px;
-  padding:0px;
-}
-
-ul li{
-  text-align: center;
-  list-style: none;
-  /* border-style: ridge; */
-  background-color: #b5dacd;
-}
-
-ul li ul li{
- background-color: #c9edd7;
- border-style: ridge;
- align:
- center;
+.famille-carte
+{
+  background-color: darkblue;
+  border-style: double;
 }
 
 header {
@@ -77,5 +61,56 @@ footer {
   width: 100%;
 }
 form {
-  border-style: double;
+  padding-top: 100px;
+}   
+/*Table dans la fenetre pop up */
+table{
+  border-collapse: collapse;
+}
+
+th, td{
+  border: 1px solid black;
+  padding: 10px;
+}
+
+ button input[type='checkbox'] {
+    position:absolute;
+    bottom:0;
+    right:0;
+    width: 25px;
+    height: 25px;
+}
+
+/* Stylez et fixez le bouton sur la page */
+.open-button {
+  background-color: #1c87c9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.9;
+  position: Fixed;
+  bottom: 15px;
+  right: 15px;
+}
+
+/* Positionnez la forme Popup */
+.login-popup {
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+/* Masquez la forme Popup */
+.form-popup {
+  display: none;
+  background-color: white;
+  position: fixed;
+  left: 45%;
+  top: 4%;
+  transform: translate(-45%, 5%);
+  border: 2px solid #666;
+  z-index: 9;
+  overflow: scroll;
+  border: solid;
 }

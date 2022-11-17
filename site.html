@@ -12,14 +12,39 @@
    <header>
       <h2>DESIGN4GREEN</h2>
    </header>
+            <button type="button" class="open-button" onclick="openForm()">PANIER</button>
+
 <p><h3>Bienvenue</h3> sur se site vous pouvez choisir votre formation</p>
     <div id="divcarte">
-
       <!-- La où la carte est gen -->
-
     </div>
     <div id="liste">
-      <ul>
+      <div class="famille-carte" >
+               </div>
+                  <h2>recommandation</h2>
+                  <p>thematique</p>
+                  <p>critere</p>
+                  <input type="checkbox" id="checkbox">
+      <div class="famille-carte" id="${famille}">
+               </div>
+                  <h2>${recommandation</h2>
+                  <p class="small">thematique</p>
+                  <p class="small ">critere</p>
+                  <input type="checkbox" id="checkbox">
+      <div class="famille-carte" id="${famille}">
+               </div>
+                  <h2>${recommandation}</h2>
+                  <p class="small">${thematique}</p>
+                  <p class="small ">${critere}</p>
+                  <input type="checkbox" id="checkbox">
+      <div class="famille-carte" id="${famille}">
+               </div>
+                  <h2>${recommandation}</h2>
+                  <p class="small">${thematique}</p>
+                  <p class="small ">${critere}</p>
+                  <p><input type="checkbox" id="checkbox"></p>
+    </div>
+     <!--  <ul>
          <li>feature
             <ul>
                <li>bla bla bla bla1</li>
@@ -56,8 +81,11 @@
                 <li>bla bla bla bl3a</li>
             </ul>
          </li>
-      </ul>
-</div>
+      </ul> -->
+      <form action="https://formspree.io/f/xgeqdrgr" method="POST">
+         <input type="email" name="_replyto" placeholder="Email">
+         <button type="submit">Devis</button>
+      </form>
     <script src="data.geojson" type="text/javascript"></script>
     <script type="text/javascript">
       //On crée l'emplacement de la carte
@@ -80,6 +108,10 @@
       function onEachEquip(feature, layer) {
         var popupContenu =  "<p>Nom de l’organisme :" + feature.properties.nom_de_lorganisme + "<br>Localisation :" + feature.properties.localisation + "</p>";
         layer.bindPopup(popupContenu);
+      }
+
+      function closeForm() {
+      document.getElementById("popupForm").style.display = "none";
       }
 
     </script>

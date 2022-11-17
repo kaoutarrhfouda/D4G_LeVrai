@@ -1,152 +1,163 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MAP</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
-    <link rel="stylesheet" href="Main.css">
-    <link rel="stylesheet" href="leaflet-search.css"/>
-  </head>
-  <body>
-   <header>
-      <h2>DESIGN4GREEN</h2>
-   </header>
-<p><h3>Bienvenue</h3> sur se site vous pouvez choisir votre formation</p>
-    <div id="divcarte">
-
-      <!-- La où la carte est gen -->
-
-    </div>
-    <div id="liste">
-
-    </div>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>MAP</title>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
+      <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+      <link rel="stylesheet" href="Main.css">
+      <link rel="stylesheet" href="leaflet-search.css"/>
+   </head>
+   <body>
+      <header>
+         <h2>DESIGN4GREEN</h2>
+      </header>
+      <p>
+      <h3>Bienvenue</h3>
+      sur se site vous pouvez choisir votre formation</p>
+      <div id="divcarte">
+         <!-- La où la carte est gen -->
+      </div>
+      <div id="liste">
+      </div>
       <form action="https://formspree.io/f/xgeqdrgr" method="POST">
          <input type="email" name="_replyto" placeholder="Email">
          <button type="submit">Devis</button>
       </form>
-    
-
-
-    <p>Cliquez sur le bouton "Ouvrir la forme" pour ouvrir la forme Popup.</p>
-    <div class="open-btn">
-      <button class="open-button" onclick="openForm()">PANIER</button>
-    </div>
-    <div class="login-popup">
-      <div class="form-popup" id="popupForm">
-         <table>
-               <thead>
-                  <tr>
-                     <th align="left">Recommandation</th>                  
-                     <th align="left">Famille</th>
-                  </tr>
-               </thead>
-            <tbody id="recapitulatif">
-                  <!-- C'est ici que le code généré sera écrit -->>
-            </tbody>
-         </table>
-<form id="myForm">
-  <input type="text" name="name" value="" placeholder="Search by Name" />
-  <input type="submit" name="submit" value="Submit form" />
-</form>
-
-
-<div class="popup" data-popup="popup-1">
-</div>          <button type="submit" class="btn">Connecter</button>
-          <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
-        </form>
+      <p>Cliquez sur le bouton "Ouvrir la forme" pour ouvrir la forme Popup.</p>
+      <div class="open-btn">
+         <button class="open-button" onclick="openForm()">PANIER</button>
       </div>
-    </div>
-    <script src="data.geojson" type="text/javascript"></script>
-    <script src="leaflet-search.js"></script>
-    <script type="text/javascript">
-    function openForm() {
-
-        //       const checked_elements = [];
-        // for(var j = 0; j < 3; j++) {
-        //     var checked_unit = document.getElementById("checkbox"+j).checked;
-        //     checked_elements[j] = checked_unit;
-        // }
-
-        document.getElementById("popupForm").style.display = "block";
-         for(var i = 0; i < 3; i++) {
-            // var checked = document.getElementById("checkbox"+i).checked;
-            // if(checked){
-
-                const recap = `<tr> 
-                        <td align="left">` + feature.properties.localisation +`</td>
-                        <td align="left"></td>
-                    </tr>`;
-                const result = document.querySelector("#recapitulatif");
-                result.insertAdjacentHTML(recap);
-            }
-        }
-   
-
-   L.geoJson(liste, {
-pointToLayer: function picnicFilter(feature) {
-  
-    console.log(feature.properties.localisation);
-}});
-      //Affichage de la pop up
-      function onEachEquip(feature, layer) {
-        const list = document.querySelector("#liste");
-        //Définition de la pop up
-        var popupContenu =  "<p>Nom de l’organisme: " + feature.properties.nom_de_lorganisme + "<br>Localisation: " + feature.properties.localisation + "<br>Intitulé: " + feature.properties.intitule + "</p>";
-        //Définition de la liste
-        var listContenu = `<div class="famille-carte" id="divlist`+feature.id+`">
-                                <h2><a href='#' onclick='clickOnMarker(`+feature.id+`)'>Localisation: `+feature.properties.localisation+`</a></h2>
-                                <p>Thématique: `+feature.properties.intitule+`</p
-                                <p>École: `+feature.properties.nom_de_lorganisme+`</p>
-                                <input type="checkbox" id="checkbox`+feature.id+`">
-                            </div>`
-
-        list.insertAdjacentHTML("beforeend", listContenu);
-        layer.bindPopup(popupContenu);
-      }
-      function closeForm() {
-        document.getElementById("popupForm").style.display = "none";
-      }
-      //On crée l'emplacement de la carte
-      var carte = L.map("divcarte").setView([47.179044, 3.030953], 6.0);
-      
-      //On importe le fond de carte
-      var tuiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: 'Fond de carte par les contributeurs <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-      }).addTo(carte);
-      
-      //Affichage des points
-      var equipements_lyr = L.geoJSON(liste, {
-        pointToLayer: function(feature, latlng) {
-          return L.marker(latlng);
-        },
-        onEachFeature : onEachEquip,
-      }).addTo(carte);
-
-
-
-      //Recherche des éléments
-      L.control.search({
-        layer: equipements_lyr,
-        initial: false,
-        propertyName: 'nom_de_lorganisme',
-        buildTip: function(text, val) {
-          var type = val.layer.feature.properties.localisation;
-          return '<a href="#" class="'+type+'">'+text+' <b>'+type+'</b></a>';
-        }
-      }).addTo(carte);
-
-      //Permet de cliquer sur les markers depuis la liste
-      function clickOnMarker(marker_id) {
-        var xPathRes = document.evaluate ('//*[@id="divcarte"]/div[1]/div[4]/img['+marker_id+']', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-        xPathRes.singleNodeValue.click();
-      }
-
-    </script>
-    <footer>
-       <h3>Site créé dans le cadre du challenge design4green</h3>
-    </footer>
-  </body>
+      <div class="login-popup">
+         <div class="form-popup" id="popupForm">
+            <div class="form-container">
+               <div id="table-2">
+                  <h2>Tableau Recapitulatif</h2>
+                  <table width="100%">
+                     <thead>
+                        <tr>
+                           <th align="left">Formation Continue / initiale</th>
+                           <th align="left">Type de structure</th>
+                           <th align="left">Libellé de l'établissement</th>
+                           <th align="left">Libellé du département / Unité de formation</th>
+                           <th align="left">Cycle de formation</th>
+                           <th align="left">Le programme couvre / Objectif</th>
+                           <th align="left">Courte description du programme / Contenu</th>
+                           <th align="left">Type d'organisme</th>
+                           <th align="left">NOM de l'organisme</th>
+                           <th align="left">Intitulé de la formation</th>
+                           <th align="left">Localisation de la structure (ville)</th>
+                           <th align="left">Cette formation donne t-elle lieu à une validation des acquis ? Si oui, lesquels ?</th>
+                           <th align="left">Durée de la formation / intervention (en j)</th>
+                           <th align="left">Modalités d’accès à la formation (présentiel / distanciel / hybride)</th>
+                           <th align="left">URL décrivant le programme</th>
+                        </tr>
+                     </thead>
+                     <tbody id="recapitulatif">
+                        <!-- C'est ici que le code généré sera écrit -->
+                     </tbody>
+                  </table>
+               </div>
+               <button type="button" class="btn generate" onclick="printDiv()">Générer le rapport</button>
+               <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
+            </div>
+         </div>
+      </div>
+      <button type="submit" class="btn">Connecter</button>
+      <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
+      </form>
+      </div>
+      </div>
+      <script src="data.geojson" type="text/javascript"></script>
+      <script src="leaflet-search.js"></script>
+      <script type="text/javascript">
+         //Formulaire
+         function openForm() {
+             document.getElementById("popupForm").style.display = "block";
+              for(var i = 1; i < liste.features.length+1; i++) {
+                 var checked = document.getElementById("checkbox"+i).checked;
+                 if(checked){
+                     const recap = `<tr> 
+                             <td align="left">` + liste.features[i].properties.formation_continue_initiale + `</td>
+                             <td align="left">` + liste.features[i].properties.type_structure + `</td>
+                             <td align="left">` + liste.features[i].properties.libelle_etablissement + `</td>
+                             <td align="left">` + liste.features[i].properties.libelle_departement + `</td>
+                             <td align="left">` + liste.features[i].properties.cycle_formation + `</td>
+                             <td align="left">` + liste.features[i].properties.objectif + `</td>
+                             <td align="left">` + liste.features[i].properties.contenu + `</td>
+                             <td align="left">` + liste.features[i].properties.type_organisme + `</td>
+                             <td align="left">` + liste.features[i].properties.nom_de_lorganisme + `</td>
+                             <td align="left">` + liste.features[i].properties.intitule + `</td>
+                             <td align="left">` + liste.features[i].properties.localisation + `</td>
+                             <td align="left">` + liste.features[i].properties.validation_acquis + `</td>
+                             <td align="left">` + liste.features[i].properties.duree_formation + `</td>
+                             <td align="left">` + liste.features[i].properties.modalite + `</td>
+                             <td align="left">` + liste.features[i].properties.URL + `</td>
+                         </tr>`;
+                     const result = document.querySelector("#recapitulatif");
+                     result.insertAdjacentHTML("beforeend", recap);
+                 }
+                 }
+             }
+         
+           //Affichage de la pop up
+           function onEachEquip(feature, layer) {
+             const list = document.querySelector("#liste");
+             //Définition de la pop up
+             var popupContenu =  "<p>Nom de l’organisme: " + feature.properties.nom_de_lorganisme + "<br>Localisation: " + feature.properties.localisation + "<br>Intitulé: " + feature.properties.intitule + "</p>";
+             //Définition de la liste
+             var listContenu = `<div class="famille-carte" id="divlist`+feature.id+`">
+                                     <h2><a href='#' onclick='clickOnMarker(`+feature.id+`)'>Localisation: `+feature.properties.localisation+`</a></h2>
+                                     <p>Thématique: `+feature.properties.intitule+`</p
+                                     <p>École: `+feature.properties.nom_de_lorganisme+`</p>
+                                     <input type="checkbox" id="checkbox`+feature.id+`">
+                                 </div>`
+         
+             list.insertAdjacentHTML("beforeend", listContenu);
+             layer.bindPopup(popupContenu);
+           }
+           function closeForm() {
+             document.getElementById("popupForm").style.display = "none";
+           }
+           //On crée l'emplacement de la carte
+           var carte = L.map("divcarte").setView([47.179044, 3.030953], 6.0);
+           
+           //On importe le fond de carte
+           var tuiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+             attribution: 'Fond de carte par les contributeurs <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+           }).addTo(carte);
+           
+           //Affichage des points
+           var equipements_lyr = L.geoJSON(liste, {
+             pointToLayer: function(feature, latlng) {
+               return L.marker(latlng);
+             },
+             onEachFeature : onEachEquip,
+           }).addTo(carte);
+         
+         
+         
+           //Recherche des éléments
+           L.control.search({
+             layer: equipements_lyr,
+             initial: false,
+             propertyName: 'nom_de_lorganisme',
+             buildTip: function(text, val) {
+               var type = val.layer.feature.properties.localisation;
+               return '<a href="#" class="'+type+'">'+text+' <b>'+type+'</b></a>';
+             }
+           }).addTo(carte);
+         
+           //Permet de cliquer sur les markers depuis la liste
+           function clickOnMarker(marker_id) {
+             var xPathRes = document.evaluate ('//*[@id="divcarte"]/div[1]/div[4]/img['+marker_id+']', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+             xPathRes.singleNodeValue.click();
+           }
+         
+      </script>
+      <footer>
+         <h3>Site créé dans le cadre du challenge design4green</h3>
+      </footer>
+   </body>
 </html>
-

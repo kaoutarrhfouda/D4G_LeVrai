@@ -11,6 +11,7 @@ html,body {
   width: 70%;
   height: 80%;
   float: left;
+  z-index: 2;
 
 }
 
@@ -64,7 +65,7 @@ form {
   padding-top: 100px;
 }   
 /*Table dans la fenetre pop up */
-table{
+/*table{
   border-collapse: collapse;
 }
 
@@ -72,8 +73,8 @@ th, td{
   border: 1px solid black;
   padding: 10px;
 }
-
- button input[type='checkbox'] {
+*/
+ #famille-carte input[type='checkbox'] {
     position:absolute;
     bottom:0;
     right:0;
@@ -108,7 +109,7 @@ th, td{
   position: fixed;
   left: 45%;
   top: 4%;
-  transform: translate(-45%, 5%);
+  transform: translate(-45%, 25%);
   border: 2px solid #666;
   z-index: 9;
   overflow: scroll;

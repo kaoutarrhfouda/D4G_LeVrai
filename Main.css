@@ -1,5 +1,5 @@
 html{
-  background-color: #F0F8FF;
+  background-color: #a4bba8;
 }
 
 html,body {
@@ -17,33 +17,41 @@ html,body {
 
 
 #liste{
-  overflow :scroll;
+  overflow-y :scroll;
   float:  LEFT;
   width: 30%;
   height: 80%;
   background-color: powderblue;
 }
 
+
 .famille-carte
 {
-  background-color: darkblue;
+  background-color: #487c4a;
   border-style: double;
+  border-color: black; 
+  color:white
 }
 
 header {
   text-align: center;
 /*  position: relative;
 */  color:white;
-  background-color:#6B8E23;
-  font-family:  "Trebuchet MS", Trebuchet MS, sans-serif;
+  background-color:#487c4a;
   border-style: double;
 }
 
+h3 a:visited{
+  color:white
+}
+h2 {
+  color: white;
+}
 h3{
-  color:#325144;
+  color:white;
 }
 h4{
-  color:#325144;
+  color:white;
 }
 
 /* CSS des barres */
@@ -65,7 +73,7 @@ form {
   padding-top: 100px;
 }   
 /*Table dans la fenetre pop up */
-/*table{
+table{
   border-collapse: collapse;
 }
 
@@ -73,7 +81,13 @@ th, td{
   border: 1px solid black;
   padding: 10px;
 }
-*/
+
+th{
+    background-color: #dddddd;
+
+}
+
+
  #famille-carte input[type='checkbox'] {
     position:absolute;
     bottom:0;
@@ -84,9 +98,10 @@ th, td{
 
 /* Stylez et fixez le bouton sur la page */
 .open-button {
-  background-color: #1c87c9;
+  background-color: #3841a8;
   color: white;
-  border: none;
+  border: solid;
+  border-color: Black;
   border-radius: 5px;
   cursor: pointer;
   opacity: 0.9;
@@ -108,10 +123,12 @@ th, td{
   background-color: white;
   position: fixed;
   left: 45%;
-  top: 4%;
+  bottom:30%;
+  top: 1%;
   transform: translate(-45%, 25%);
   border: 2px solid #666;
   z-index: 9;
   overflow: scroll;
   border: solid;
+  max-width: 80%;
 }
